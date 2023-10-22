@@ -2,6 +2,7 @@ package com.example.montyhall;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashSet;
@@ -27,6 +28,7 @@ public class GameServiceTests {
     void testSetup() {
         gameSetup = new GameSetup();
         gameService = new GameService(gameSetup);
+        gameService.setupNewGame();
     }
 
     void setupBoxes1WinAndChosen() {
@@ -69,6 +71,10 @@ public class GameServiceTests {
         gameSetup.setBox1(box);
         gameSetup.setBoxesInGame(List.of(box, gameService.getBoxByChoice(2), gameService.getBoxByChoice(3)));
         assertEquals(box, gameService.getBoxByChoice(9));
+
+        assertThrows(IllegalArgumentException.class,() -> {
+            gameService.getBoxByChoice(54);
+        });
     }
 
     @Test
